@@ -192,9 +192,8 @@ section { padding: 0.9rem 0; }
   text-align: center;
 }
 .paper-tbl td.best { background: #DEF3E6; font-weight: 700; }
-.paper-tbl td.second { background: #ECF8F1; text-decoration: underline; }
+.paper-tbl td.second { background: #ECF8F1; text-decoration: underline; font-weight: 400; }
 .paper-tbl tr.persist td { color: #9ca3af; }
-.paper-tbl tr.ours-row td { font-weight: 650; }
 .paper-tbl tbody tr:last-child td { border-bottom: 0; }
 
 .fig-row {
