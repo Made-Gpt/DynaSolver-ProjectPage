@@ -1,0 +1,545 @@
+{
+  "n_assets": 386,
+  "robots": [
+    {
+      "index": "01",
+      "id": "a1_description",
+      "name": "A1",
+      "clips": [
+        {
+          "raw": "u2_yaw_p20",
+          "speed": 2,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "a1_description__u2_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/a1_description__u2_yaw_p20__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u6_yaw_p20",
+          "speed": 6,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "a1_description__u6_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/a1_description__u6_yaw_p20__final_corrected.jpg",
+          "caption": "u = 6 m/s, yaw +20\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "02",
+      "id": "aliengo_description",
+      "name": "Aliengo",
+      "clips": [
+        {
+          "raw": "u3_yaw_m10",
+          "speed": 3,
+          "yaw": -10,
+          "yawText": "\u221210\u00b0",
+          "key": "neg",
+          "src": "aliengo_description__u3_yaw_m10__final_corrected.mp4",
+          "poster": "thumbnails/aliengo_description__u3_yaw_m10__final_corrected.jpg",
+          "caption": "u = 3 m/s, yaw \u221210\u00b0"
+        },
+        {
+          "raw": "u4_yaw_p0",
+          "speed": 4,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "aliengo_description__u4_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/aliengo_description__u4_yaw_p0__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw 0\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "03",
+      "id": "anymal_b_description",
+      "name": "ANYmal B",
+      "clips": [
+        {
+          "raw": "u4_yaw_p20",
+          "speed": 4,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "anymal_b_description__u4_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/anymal_b_description__u4_yaw_p20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u6_yaw_p0",
+          "speed": 6,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "anymal_b_description__u6_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/anymal_b_description__u6_yaw_p0__final_corrected.jpg",
+          "caption": "u = 6 m/s, yaw 0\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "04",
+      "id": "anymal_d_description",
+      "name": "ANYmal D",
+      "clips": [
+        {
+          "raw": "u4_yaw_p0",
+          "speed": 4,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "anymal_d_description__u4_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/anymal_d_description__u4_yaw_p0__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw 0\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p20",
+          "speed": 8,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "anymal_d_description__u8_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/anymal_d_description__u8_yaw_p20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw +20\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "05",
+      "id": "b1_description",
+      "name": "B1",
+      "clips": [
+        {
+          "raw": "u2_yaw_p20",
+          "speed": 2,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "b1_description__u2_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/b1_description__u2_yaw_p20__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u6_yaw_m20",
+          "speed": 6,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "b1_description__u6_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/b1_description__u6_yaw_m20__final_corrected.jpg",
+          "caption": "u = 6 m/s, yaw \u221220\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "06",
+      "id": "b2_description",
+      "name": "B2",
+      "clips": [
+        {
+          "raw": "u6_yaw_m20",
+          "speed": 6,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "b2_description__u6_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/b2_description__u6_yaw_m20__final_corrected.jpg",
+          "caption": "u = 6 m/s, yaw \u221220\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p0",
+          "speed": 8,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "b2_description__u8_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/b2_description__u8_yaw_p0__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw 0\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "07",
+      "id": "bolt_description",
+      "name": "Bolt",
+      "clips": [
+        {
+          "raw": "u2_yaw_m20",
+          "speed": 2,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "bolt_description__u2_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/bolt_description__u2_yaw_m20__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw \u221220\u00b0"
+        },
+        {
+          "raw": "u3_yaw_p10",
+          "speed": 3,
+          "yaw": 10,
+          "yawText": "+10\u00b0",
+          "key": "pos",
+          "src": "bolt_description__u3_yaw_p10__final_corrected.mp4",
+          "poster": "thumbnails/bolt_description__u3_yaw_p10__final_corrected.jpg",
+          "caption": "u = 3 m/s, yaw +10\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "08",
+      "id": "booster_t1_description",
+      "name": "Booster T1",
+      "clips": [
+        {
+          "raw": "u2_yaw_m20",
+          "speed": 2,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "booster_t1_description__u2_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/booster_t1_description__u2_yaw_m20__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw \u221220\u00b0"
+        },
+        {
+          "raw": "u4_yaw_m20",
+          "speed": 4,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "booster_t1_description__u4_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/booster_t1_description__u4_yaw_m20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw \u221220\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "09",
+      "id": "cassie_description",
+      "name": "Cassie",
+      "clips": [
+        {
+          "raw": "u4_yaw_p20",
+          "speed": 4,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "cassie_description__u4_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/cassie_description__u4_yaw_p20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u6_yaw_p0",
+          "speed": 6,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "cassie_description__u6_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/cassie_description__u6_yaw_p0__final_corrected.jpg",
+          "caption": "u = 6 m/s, yaw 0\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "10",
+      "id": "ergocub_description",
+      "name": "ergoCub",
+      "clips": [
+        {
+          "raw": "u4_yaw_p20",
+          "speed": 4,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "ergocub_description__u4_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/ergocub_description__u4_yaw_p20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p20",
+          "speed": 8,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "ergocub_description__u8_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/ergocub_description__u8_yaw_p20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw +20\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "11",
+      "id": "g1_description",
+      "name": "G1",
+      "clips": [
+        {
+          "raw": "u2_yaw_m20",
+          "speed": 2,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "g1_description__u2_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/g1_description__u2_yaw_m20__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw \u221220\u00b0"
+        },
+        {
+          "raw": "u2_yaw_p0",
+          "speed": 2,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "g1_description__u2_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/g1_description__u2_yaw_p0__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw 0\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "12",
+      "id": "go2_description",
+      "name": "Go2",
+      "clips": [
+        {
+          "raw": "u6_yaw_m20",
+          "speed": 6,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "go2_description__u6_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/go2_description__u6_yaw_m20__final_corrected.jpg",
+          "caption": "u = 6 m/s, yaw \u221220\u00b0"
+        },
+        {
+          "raw": "u7_yaw_p10",
+          "speed": 7,
+          "yaw": 10,
+          "yawText": "+10\u00b0",
+          "key": "pos",
+          "src": "go2_description__u7_yaw_p10__final_corrected.mp4",
+          "poster": "thumbnails/go2_description__u7_yaw_p10__final_corrected.jpg",
+          "caption": "u = 7 m/s, yaw +10\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "13",
+      "id": "h1_2_description",
+      "name": "H1-2",
+      "clips": [
+        {
+          "raw": "u4_yaw_m20",
+          "speed": 4,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "h1_2_description__u4_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/h1_2_description__u4_yaw_m20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw \u221220\u00b0"
+        },
+        {
+          "raw": "u8_yaw_m20",
+          "speed": 8,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "h1_2_description__u8_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/h1_2_description__u8_yaw_m20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw \u221220\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "14",
+      "id": "h1_description",
+      "name": "H1",
+      "clips": [
+        {
+          "raw": "u4_yaw_p0",
+          "speed": 4,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "h1_description__u4_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/h1_description__u4_yaw_p0__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw 0\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p0",
+          "speed": 8,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "h1_description__u8_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/h1_description__u8_yaw_p0__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw 0\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "15",
+      "id": "jvrc_description",
+      "name": "JVRC-1",
+      "clips": [
+        {
+          "raw": "u4_yaw_p20",
+          "speed": 4,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "jvrc_description__u4_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/jvrc_description__u4_yaw_p20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u8_yaw_m20",
+          "speed": 8,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "jvrc_description__u8_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/jvrc_description__u8_yaw_m20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw \u221220\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "16",
+      "id": "laikago_description",
+      "name": "Laikago",
+      "clips": [
+        {
+          "raw": "u4_yaw_p20",
+          "speed": 4,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "laikago_description__u4_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/laikago_description__u4_yaw_p20__final_corrected.jpg",
+          "caption": "u = 4 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u7_yaw_m10",
+          "speed": 7,
+          "yaw": -10,
+          "yawText": "\u221210\u00b0",
+          "key": "neg",
+          "src": "laikago_description__u7_yaw_m10__final_corrected.mp4",
+          "poster": "thumbnails/laikago_description__u7_yaw_m10__final_corrected.jpg",
+          "caption": "u = 7 m/s, yaw \u221210\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "17",
+      "id": "legolas_description",
+      "name": "Legolas",
+      "clips": [
+        {
+          "raw": "u7_yaw_p10",
+          "speed": 7,
+          "yaw": 10,
+          "yawText": "+10\u00b0",
+          "key": "pos",
+          "src": "legolas_description__u7_yaw_p10__final_corrected.mp4",
+          "poster": "thumbnails/legolas_description__u7_yaw_p10__final_corrected.jpg",
+          "caption": "u = 7 m/s, yaw +10\u00b0"
+        },
+        {
+          "raw": "u8_yaw_m20",
+          "speed": 8,
+          "yaw": -20,
+          "yawText": "\u221220\u00b0",
+          "key": "neg",
+          "src": "legolas_description__u8_yaw_m20__final_corrected.mp4",
+          "poster": "thumbnails/legolas_description__u8_yaw_m20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw \u221220\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "18",
+      "id": "mini_cheetah_description",
+      "name": "Mini Cheetah",
+      "clips": [
+        {
+          "raw": "u8_yaw_p0",
+          "speed": 8,
+          "yaw": 0,
+          "yawText": "0\u00b0",
+          "key": "zero",
+          "src": "mini_cheetah_description__u8_yaw_p0__final_corrected.mp4",
+          "poster": "thumbnails/mini_cheetah_description__u8_yaw_p0__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw 0\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p20",
+          "speed": 8,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "mini_cheetah_description__u8_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/mini_cheetah_description__u8_yaw_p20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw +20\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "19",
+      "id": "solo_description",
+      "name": "Solo",
+      "clips": [
+        {
+          "raw": "u2_yaw_p20",
+          "speed": 2,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "solo_description__u2_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/solo_description__u2_yaw_p20__final_corrected.jpg",
+          "caption": "u = 2 m/s, yaw +20\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p20",
+          "speed": 8,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "solo_description__u8_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/solo_description__u8_yaw_p20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw +20\u00b0"
+        }
+      ]
+    },
+    {
+      "index": "20",
+      "id": "talos_description",
+      "name": "TALOS",
+      "clips": [
+        {
+          "raw": "u3_yaw_p10",
+          "speed": 3,
+          "yaw": 10,
+          "yawText": "+10\u00b0",
+          "key": "pos",
+          "src": "talos_description__u3_yaw_p10__final_corrected.mp4",
+          "poster": "thumbnails/talos_description__u3_yaw_p10__final_corrected.jpg",
+          "caption": "u = 3 m/s, yaw +10\u00b0"
+        },
+        {
+          "raw": "u8_yaw_p20",
+          "speed": 8,
+          "yaw": 20,
+          "yawText": "+20\u00b0",
+          "key": "pos",
+          "src": "talos_description__u8_yaw_p20__final_corrected.mp4",
+          "poster": "thumbnails/talos_description__u8_yaw_p20__final_corrected.jpg",
+          "caption": "u = 8 m/s, yaw +20\u00b0"
+        }
+      ]
+    }
+  ]
+}

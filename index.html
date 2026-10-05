@@ -12,7 +12,6 @@
 </head>
 <body>
   <header class="hero wrap">
-    <div class="badge">Project Page</div>
     <h1>DynaSolver: A Neural Operator for Autoregressive 4D Flow Prediction with Dynamic Boundaries</h1>
     <p class="authors">
       <a href="https://scholar.google.com/citations?user=ezQHNKwAAAAJ&hl=en">Rui Qian</a><sup>1,*</sup>,
@@ -32,9 +31,8 @@
     </p>
     <p class="note">* Equal contribution. &nbsp; † Corresponding author.</p>
     <div class="links">
-      <a class="btn" href="#">Paper (coming soon)</a>
-      <a class="btn secondary" href="https://github.com/Made-Gpt/dynasolver">Code</a>
-      <a class="btn secondary" href="#bibtex">BibTeX</a>
+      <a class="btn" href="static/paper/DynaSolver.pdf">Paper</a>
+      <a class="btn secondary" href="https://github.com/DynaSolver/DynaSolver_Code">Code</a>
     </div>
   </header>
 
@@ -66,40 +64,165 @@
 
     <section>
       <div class="card">
-        <h2>Teaser</h2>
-        <img class="teaser" src="static/images/teaser.jpg" alt="DynaSolver teaser figure from the paper" />
-        <p class="caption">
-          Figure 1. Existing CFD settings versus dynamic-boundary 4D CFD on articulated robots
-          (RoboCFD-4D).
-        </p>
+        <h2>Method</h2>
+        <div class="subblock">
+          <h3>Efficient token-space pipeline</h3>
+          <p>
+            Temporal 4D CFD is expensive if every operator layer still slices thousands of
+            surface and volume points. DynaSolver amortizes that cost: point features are
+            <strong>sliced once</strong> into compact physical tokens, all self-, cross-, and
+            causal attention run in token space, and a <strong>single deslice</strong> plus a
+            light MLP decoder reconstructs the residual field. For a window of length
+            <em>W</em> and depth <em>L</em>, point–token projection is
+            <em>O(W)</em> rather than <em>O(LW)</em>, so temporal reasoning stays accurate
+            without repeating the heavy point-space work.
+          </p>
+          <img class="figure" src="static/images/pipeline.jpg" alt="Overview of DynaSolver" />
+          <p class="caption">Figure 1. Full DynaSolver pipeline. Fast Slice/Deslice brackets the operator stack so efficiency and point-level reconstruction are handled separately.</p>
+        </div>
+        <div class="subblock">
+          <h3>Replay-Augmented Parallel Training</h3>
+          <p>
+            Unrolled training sees the model’s own errors but is slow; parallel teacher-forcing
+            is fast but only sees ground-truth history. Replay-Augmented Parallel Training
+            keeps both: a <strong>frozen previous-epoch model</strong> rolls out replay histories
+            (no gradients), then the student predicts <strong>every transition in one
+            block-causal pass</strong> with ground-truth targets. Mixing replay and clean clips
+            exposes realistic rollout noise while the student stays densely supervised and cheap
+            to train.
+          </p>
+          <img class="figure" src="static/images/training.jpg" alt="Replay-Augmented Parallel Training" />
+          <p class="caption">Figure 2. (a–b) sequential unroll / pushforward; (c) parallel teacher-forcing; (d) our replay-augmented parallel training.</p>
+        </div>
       </div>
     </section>
 
     <section>
       <div class="card">
-        <h2>Method Overview</h2>
-        <p>
-          DynaSolver predicts the next-step flow field conditioned on dynamic boundary evolution
-          and causal flow history. It uses a physical-token operator stack for efficient
-          spatiotemporal modeling, and Replay-Augmented Parallel Training to reduce rollout drift.
-        </p>
-        <img class="figure" src="static/images/pipeline.png" alt="DynaSolver method pipeline" />
-        <p class="caption">Figure 2. Overview of the DynaSolver architecture / training pipeline.</p>
-        <div class="metrics">
-          <div class="metric">
-            <strong>22</strong>
-            <span>Articulated robots</span>
+        <h2>Experiments</h2>
+
+        <div class="subblock">
+          <h3>Quantitative comparison</h3>
+          <p>
+            On RoboCFD-4D Base we report relative L<sub>2</sub> (%) of velocity and pressure at
+            selected rollout steps, plus full-rollout averages. Persistence is a no-learning
+            baseline and is excluded from ranking. DynaSolver is not the strongest at the first
+            step, but it is best from mid-horizon onward, so the full-rollout overall error is lowest.
+          </p>
+        <div class="table-wrap">
+          <table class="paper-tbl">
+            <thead>
+              <tr>
+                <th rowspan="2">Method</th>
+                <th colspan="6">Per-frame Velocity ↓</th>
+                <th colspan="6">Per-frame Pressure ↓</th>
+                <th rowspan="2">Avg. Vel. ↓</th>
+                <th rowspan="2">Avg. Pre. ↓</th>
+                <th rowspan="2">Overall ↓</th>
+              </tr>
+              <tr>
+                <th>1</th><th>6</th><th>12</th><th>18</th><th>24</th><th>29</th>
+                <th>1</th><th>6</th><th>12</th><th>18</th><th>24</th><th>29</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>GNOT</td><td>11.38</td><td>21.14</td><td>28.47</td><td>34.58</td><td>40.01</td><td>43.99</td><td>34.08</td><td>72.89</td><td>93.49</td><td>98.66</td><td>102.21</td><td>99.18</td><td>30.56</td><td>87.84</td><td>31.55</td></tr>
+              <tr><td>GAOT</td><td>14.46</td><td>19.54</td><td>23.58</td><td>26.93</td><td>29.66</td><td>31.19</td><td>40.96</td><td>57.70</td><td>66.52</td><td>75.18</td><td>84.08</td><td>90.67</td><td>24.60</td><td>70.25</td><td>25.32</td></tr>
+              <tr><td>CNO</td><td>9.32</td><td>19.36</td><td>24.27</td><td>28.49</td><td>35.25</td><td>47.04</td><td>34.24</td><td>77.09</td><td>87.29</td><td>98.14</td><td>108.89</td><td>120.71</td><td>27.12</td><td>91.52</td><td>28.28</td></tr>
+              <tr><td>P3D</td><td>9.32</td><td>17.07</td><td>22.62</td><td>26.70</td><td>30.44</td><td>32.36</td><td>32.55</td><td>62.66</td><td>76.03</td><td>85.25</td><td>96.86</td><td>102.08</td><td>23.72</td><td>78.82</td><td>24.61</td></tr>
+              <tr><td>MGN</td><td>9.49</td><td>19.70</td><td>23.69</td><td>25.88</td><td>27.66</td><td>28.55</td><td>29.32</td><td>65.02</td><td>79.25</td><td>86.55</td><td>96.78</td><td>99.86</td><td>23.48</td><td>79.44</td><td>24.51</td></tr>
+              <tr><td>DPOT</td><td>13.66</td><td>22.65</td><td>26.70</td><td>32.77</td><td>39.39</td><td>44.98</td><td>42.45</td><td>78.12</td><td>103.77</td><td>133.25</td><td>166.67</td><td>187.97</td><td>30.30</td><td>121.10</td><td>32.08</td></tr>
+              <tr><td>AB-UPT</td><td>14.75</td><td>19.60</td><td>23.36</td><td>25.68</td><td>27.92</td><td>29.38</td><td>42.29</td><td>77.47</td><td>91.30</td><td>96.30</td><td>97.54</td><td>96.23</td><td>23.83</td><td>86.84</td><td>25.03</td></tr>
+              <tr><td>UNO</td><td>11.71</td><td>18.17</td><td>22.82</td><td>26.91</td><td>34.53</td><td>62.31</td><td>34.13</td><td>58.36</td><td>71.43</td><td>81.76</td><td>104.69</td><td>156.99</td><td>27.32</td><td>81.55</td><td>28.40</td></tr>
+              <tr><td>U-Net</td><td class="best">7.48</td><td>16.73</td><td>20.99</td><td>23.30</td><td>25.05</td><td>26.08</td><td>27.90</td><td>61.64</td><td>78.41</td><td>85.41</td><td>96.04</td><td>95.75</td><td>20.81</td><td>77.99</td><td>21.86</td></tr>
+              <tr><td>MSPT</td><td>9.28</td><td>19.15</td><td>23.18</td><td>25.89</td><td>28.14</td><td>29.94</td><td class="second">27.70</td><td>61.18</td><td>73.90</td><td>86.65</td><td>101.71</td><td>110.88</td><td>23.42</td><td>79.14</td><td>24.39</td></tr>
+              <tr><td>Transformer<sub>galerkin</sub></td><td>11.89</td><td>19.49</td><td>23.07</td><td>28.43</td><td>35.67</td><td>42.74</td><td>38.61</td><td>69.13</td><td>96.66</td><td>115.08</td><td>136.97</td><td>168.67</td><td>26.86</td><td>104.64</td><td>28.11</td></tr>
+              <tr><td>DilResNet</td><td>8.55</td><td>17.99</td><td>22.08</td><td>23.90</td><td>25.04</td><td>25.30</td><td>29.00</td><td>61.87</td><td>78.00</td><td>83.80</td><td>86.84</td><td>84.99</td><td>21.44</td><td>74.56</td><td>22.30</td></tr>
+              <tr><td>PhysGTO</td><td>9.41</td><td>18.51</td><td>21.85</td><td>23.68</td><td>25.69</td><td>26.97</td><td>30.52</td><td>60.97</td><td>70.12</td><td>78.40</td><td>89.10</td><td>92.79</td><td>21.81</td><td>72.96</td><td>22.99</td></tr>
+              <tr><td>GNS</td><td>9.67</td><td>19.74</td><td>24.31</td><td>27.72</td><td>30.70</td><td>32.74</td><td>29.69</td><td>61.92</td><td>78.24</td><td>89.28</td><td>99.89</td><td>106.83</td><td>24.97</td><td>80.91</td><td>26.09</td></tr>
+              <tr><td>DeepONet</td><td>16.68</td><td>21.74</td><td>26.20</td><td>28.05</td><td>28.29</td><td>28.67</td><td>60.07</td><td>73.64</td><td>86.37</td><td>91.34</td><td>92.49</td><td>90.63</td><td>25.51</td><td>84.65</td><td>26.38</td></tr>
+              <tr><td>GraphViT</td><td class="second">8.33</td><td>17.05</td><td>20.41</td><td>22.18</td><td>23.61</td><td>24.44</td><td>28.28</td><td>57.98</td><td>69.36</td><td>71.16</td><td>75.61</td><td>76.20</td><td>20.15</td><td>66.05</td><td>21.00</td></tr>
+              <tr><td>BSMS</td><td>8.44</td><td>17.30</td><td>21.20</td><td>24.12</td><td>26.66</td><td>28.85</td><td class="best">27.01</td><td>54.20</td><td>61.57</td><td>68.21</td><td>77.84</td><td>81.24</td><td>21.78</td><td>63.92</td><td>22.51</td></tr>
+              <tr><td>FNO</td><td>10.70</td><td>18.04</td><td>22.07</td><td>26.54</td><td>33.95</td><td>42.81</td><td>31.13</td><td class="best">52.02</td><td>60.85</td><td>66.83</td><td class="second">71.30</td><td>76.06</td><td>25.49</td><td>61.69</td><td>26.08</td></tr>
+              <tr><td>LinearNO</td><td>10.26</td><td>16.81</td><td>19.74</td><td>21.66</td><td>22.92</td><td>23.84</td><td>29.14</td><td class="second">52.05</td><td class="second">60.81</td><td class="second">65.82</td><td>72.07</td><td class="second">72.55</td><td>19.82</td><td class="second">61.00</td><td>20.58</td></tr>
+              <tr><td>Transolver</td><td>10.19</td><td class="best">16.24</td><td>19.10</td><td>20.73</td><td>22.38</td><td>23.45</td><td>29.77</td><td>54.27</td><td>61.51</td><td>66.99</td><td>74.53</td><td>75.64</td><td>19.23</td><td>62.76</td><td class="second">19.99</td></tr>
+              <tr><td>MWT</td><td>9.55</td><td>16.50</td><td class="second">18.67</td><td class="second">20.26</td><td class="second">22.03</td><td class="second">23.35</td><td>32.05</td><td>57.19</td><td>70.58</td><td>83.28</td><td>97.58</td><td>106.52</td><td class="second">18.97</td><td>76.64</td><td>20.11</td></tr>
+              <tr class="persist"><td>Persistence</td><td>14.14</td><td>20.78</td><td>19.80</td><td>20.42</td><td>20.92</td><td>21.35</td><td>40.17</td><td>60.19</td><td>54.16</td><td>54.63</td><td>58.75</td><td>58.21</td><td>20.14</td><td>56.09</td><td>20.95</td></tr>
+              <tr class="ours-row">
+                <td>DynaSolver (Ours)</td>
+                <td>11.61</td><td class="second">16.27</td><td class="best">17.37</td><td class="best">17.86</td><td class="best">18.06</td><td class="best">18.36</td>
+                <td>34.02</td><td>53.19</td><td class="best">57.48</td><td class="best">59.17</td><td class="best">60.37</td><td class="best">61.61</td>
+                <td class="best">17.07</td><td class="best">56.35</td><td class="best">17.71</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">Table 1. Quantitative comparison across rollout horizons on RoboCFD-4D Base. Best in green; second-best underlined. Persistence is not ranked.</p>
+        </div>
+
+        <div class="subblock">
+          <h3>Rollout error trends</h3>
+          <p>
+            The same Base evaluation as curves: overall, velocity, and pressure relative L<sub>2</sub>
+            over the full autoregressive horizon. DynaSolver’s gap widens as rollout proceeds,
+            especially for velocity, matching the late-horizon numbers in Table 1
+            (18.36% velocity and 61.61% pressure at step 29).
+          </p>
+          <div class="fig-row">
+            <figure>
+              <img class="figure" src="static/images/rollout_all.jpg" alt="Overall rollout error" />
+              <figcaption class="caption">Overall</figcaption>
+            </figure>
+            <figure>
+              <img class="figure" src="static/images/rollout_vel.jpg" alt="Velocity rollout error" />
+              <figcaption class="caption">Velocity</figcaption>
+            </figure>
+            <figure>
+              <img class="figure" src="static/images/rollout_pre.jpg" alt="Pressure rollout error" />
+              <figcaption class="caption">Pressure</figcaption>
+            </figure>
           </div>
-          <div class="metric">
-            <strong>4D</strong>
-            <span>Dynamic-boundary CFD</span>
-          </div>
-          <div class="metric">
-            <strong>Best</strong>
-            <span>Full-rollout accuracy</span>
+          <p class="caption">Figure 3. Rollout error evolution on RoboCFD-4D Base.</p>
+        </div>
+
+        <div class="subblock">
+          <h3>Accuracy versus training cost</h3>
+          <div class="split">
+            <figure class="split-fig">
+              <img class="figure" src="static/images/train_wall.jpg" alt="Training cost versus overall rollout error" />
+              <figcaption class="caption">Figure 4. Training wall-clock versus overall rollout error.</figcaption>
+            </figure>
+            <div class="split-copy">
+              <p>
+                DynaSolver has the lowest overall rollout error (17.71%, 11.4% below the next-best 19.99%) while staying among the cheapest learned methods to train. Token-space operators skip repeated point-space work; Replay-Augmented Parallel Training keeps dense parallel updates instead of sequential unrolling.
+              </p>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="card cmp" id="accuracy">
+      <h2>Qualitative comparison</h2>
+      <p>
+        Looping error maps of DynaSolver, ABUPT, and PhysGTO against the WaterLily reference.
+        Click a panel to pause, same as the clips below.
+      </p>
+      <p class="cmp-sub" id="cmpSub"></p>
+      <div class="cmp-controls">
+        <div class="fgroup"><span class="flabel">Case</span><div class="fgroup" id="cmpCaseChips"></div></div>
+        <div class="sep"></div>
+        <div class="fgroup"><span class="flabel">Quantity</span><div class="fgroup" id="cmpModeChips"></div></div>
+      </div>
+      <div class="cmp-board" id="cmpBoard"></div>
+      <div class="cmp-scales" id="cmpScales"></div>
+      <p class="cmp-note" id="cmpNote"></p>
+    </section>
+
+    <section class="card" id="clips">
+      <h2>RoboCFD-4D clips</h2>
+      <p>Twenty robots, two wind conditions each. Click a clip to pause. Each loop is muted and 50 frames.</p>
+      <div class="clip-grid" id="grid"></div>
     </section>
 
     <section id="bibtex">
@@ -116,7 +239,8 @@
   </main>
 
   <footer class="footer wrap">
-    Built for the DynaSolver project page · Hosted on GitHub Pages
+    DynaSolver project page
   </footer>
+  <script src="static/js/demo.js"></script>
 </body>
 </html>

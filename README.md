@@ -1,6 +1,8 @@
 # DynaSolver Project Page
 
-Academic project homepage for **DynaSolver: A Neural Operator for Autoregressive 4D Flow Prediction with Dynamic Boundaries**.
+Academic project homepage for **DynaSolver**. The comparison board and CFD clips are embedded in `index.html`.
+
+Top links: Paper and Code only.
 
 ## Local preview
 
@@ -10,10 +12,3 @@ python3 -m http.server 8000
 ```
 
 Open http://127.0.0.1:8000
-
-## GitHub Pages
-
-1. Create a public repo `Made-Gpt/dynasolver`
-2. Push this directory to `main`
-3. Settings → Pages → Deploy from branch `main` / root
-4. Site URL: https://made-gpt.github.io/dynasolver/
