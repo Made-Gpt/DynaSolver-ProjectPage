@@ -335,3 +335,36 @@ function rollPaint(state, gx){
     }, { threshold: 0.25 }).observe(row);
   });
 })();
+
+(function(){
+  const split = document.querySelector(".split-cost");
+  if (!split) return;
+  const left = split.querySelector(".cost-left");
+  const copy = split.querySelector(".split-copy");
+  const img = left.querySelector("img");
+  const stacked = window.matchMedia("(max-width: 960px)");
+  function stackHeight(el){
+    const kids = Array.from(el.children);
+    const gap = parseFloat(getComputedStyle(el).rowGap) || 0;
+    return kids.reduce((a, k) => a + k.getBoundingClientRect().height, 0) + gap * (kids.length - 1);
+  }
+  function fit(){
+    if (stacked.matches || !img.naturalWidth){
+      split.style.gridTemplateColumns = "";
+      return;
+    }
+    const total = split.clientWidth;
+    let lo = total * 0.4, hi = total * 0.62;
+    for (let i = 0; i < 18; i++){
+      const w = (lo + hi) / 2;
+      split.style.gridTemplateColumns = w + "px minmax(0, 1fr)";
+      if (stackHeight(left) < stackHeight(copy)) lo = w; else hi = w;
+    }
+    split.style.gridTemplateColumns = hi + "px minmax(0, 1fr)";
+  }
+  let raf = 0;
+  const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); };
+  if (img.complete) schedule(); else img.addEventListener("load", schedule);
+  if (document.fonts) document.fonts.ready.then(schedule);
+  window.addEventListener("resize", schedule);
+})();
