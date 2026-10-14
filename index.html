@@ -65,6 +65,7 @@
         <video class="demo-video" controls preload="metadata" playsinline poster="static/video/demo.jpg">
           <source src="static/video/demo.mp4" type="video/mp4" />
         </video>
+        <p class="caption video-caption">Overview of RoboCFD-4D and DynaSolver (2:55, with narration).</p>
       </div>
     </section>
 
@@ -96,34 +97,78 @@
     <section class="band" id="method">
       <div class="wrap">
         <h2>Method</h2>
+
         <div class="subblock">
-          <h3>Efficient token-space pipeline</h3>
-          <p>
-            Temporal 4D CFD is expensive if every operator layer still slices thousands of
-            surface and volume points. DynaSolver amortizes that cost: point features are
-            <strong>sliced once</strong> into compact physical tokens, all self-, cross-, and
-            causal attention run in token space, and a <strong>single deslice</strong> plus a
-            light MLP decoder reconstructs the residual field. For a window of length
-            <em>W</em> and depth <em>L</em>, point–token projection is
-            <em>O(W)</em> rather than <em>O(LW)</em>, so temporal reasoning stays accurate
-            without repeating the heavy point-space work.
+          <h3><span class="num">1</span>Efficient 4D Sequence Modeling</h3>
+          <p class="contrib">
+            DynaSolver predicts the next velocity and pressure field from the robot geometry, its
+            boundary motion, and a short causal history of flow states. It is designed to do this
+            <strong>cheaply</strong> and <strong>with explicit temporal reasoning</strong>.
           </p>
           <img class="figure" src="static/images/pipeline.jpg" alt="Overview of DynaSolver" />
-          <p class="caption">Figure 1. Full DynaSolver pipeline. Fast Slice/Deslice brackets the operator stack so efficiency and point-level reconstruction are handled separately.</p>
+          <p class="caption">Figure 1. DynaSolver pipeline. A single Fast Slice / Fast Deslice pair encloses the whole spatio-temporal operator stack.</p>
+
+          <div class="points">
+            <div class="point">
+              <h4>Efficiency</h4>
+              <p><span class="step">Why</span>Every transition carries thousands of surface and volume points.
+                Point-space operators re-project points to tokens and run point-wise feed-forward layers in
+                <em>every</em> layer, so a temporal window multiplies this heavy cost by both depth and window length.</p>
+              <p><span class="step">How</span>We <strong>slice once</strong>: lifted point features are encoded into compact
+                surface and volume physical tokens, all self-, cross-, causal attention and feed-forward layers operate
+                in token space, and a <strong>single deslice</strong> with a light MLP decodes the point-wise residual field.</p>
+              <p><span class="step">Result</span>For a window of <em>W</em> transitions and <em>L</em> operator blocks,
+                point–token projection runs <strong>O(W)</strong> rather than <strong>O(LW)</strong> times, so deeper temporal
+                reasoning adds only token-space cost while outputs stay point-accurate.</p>
+            </div>
+            <div class="point">
+              <h4>Temporal modeling</h4>
+              <p><span class="step">1</span><strong>Boundary evolution injection.</strong> Each transition is conditioned on the
+                boundary motion between adjacent frames, giving the operator explicit information on how the geometry moves
+                instead of inferring it from the flow.</p>
+              <p><span class="step">2</span><strong>Causal sliding window.</strong> A short history of up to <em>W</em> transitions
+                supplies the memory that a single, partially observed flow state lacks; the window grows from the initial
+                state and then slides forward.</p>
+              <p><span class="step">3</span><strong>Causal temporal attention.</strong> A block-causal mask lets each transition
+                aggregate information only from itself and earlier transitions, so the model reasons over history exactly
+                as it will during rollout and predicts a residual on top of the previous state.</p>
+            </div>
+          </div>
         </div>
+
         <div class="subblock">
-          <h3>Replay-Augmented Parallel Training</h3>
-          <p>
-            Unrolled training sees the model’s own errors but is slow; parallel teacher-forcing
-            is fast but only sees ground-truth history. Replay-Augmented Parallel Training
-            keeps both: a <strong>frozen previous-epoch model</strong> rolls out replay histories
-            (no gradients), then the student predicts <strong>every transition in one
-            block-causal pass</strong> with ground-truth targets. Mixing replay and clean clips
-            exposes realistic rollout noise while the student stays densely supervised and cheap
-            to train.
-          </p>
+          <h3><span class="num">2</span>Replay-Augmented Parallel Training</h3>
           <img class="figure" src="static/images/training.jpg" alt="Replay-Augmented Parallel Training" />
-          <p class="caption">Figure 2. (a–b) sequential unroll / pushforward; (c) parallel teacher-forcing; (d) our replay-augmented parallel training.</p>
+          <p class="caption">Figure 2. (a–b) sequential unroll and pushforward; (c) parallel teacher forcing; (d) our replay-augmented parallel training.</p>
+
+          <div class="split split-train">
+            <div class="split-copy">
+              <p class="dilemma">
+                Training an autoregressive solver is a case of <em>you can’t have your cake and eat it</em>:
+                <b>fast training</b> or <b>robust rollout</b>.
+              </p>
+              <p>
+                <strong>Unroll</strong> and <strong>Pushforward</strong> feed the model its own predictions, so rollout is
+                robust, but they unroll sequentially and take about 16.5 h. <strong>Parallel teacher forcing</strong>
+                supervises every transition in one block-causal pass (1.8 h), yet it only ever sees ground-truth histories,
+                so the error grows to 18.18% once the model rolls out on its own outputs.
+              </p>
+              <p>
+                We close this train–inference gap without giving up parallelism. A <strong>frozen previous-epoch model</strong>
+                rolls out replay histories without gradients, and the current model is trained on a mix of replay and clean
+                clips <strong>in a single parallel pass</strong> with ground-truth targets.
+              </p>
+              <p class="payoff">
+                Both at once: the lowest rollout error, <b>16.14%</b>, in just <b>3.38 h</b>, beating Unroll while
+                training about <b>4.9× faster</b>.
+              </p>
+            </div>
+            <div class="abl" aria-label="Training strategy ablation">
+              <div class="abl-head"><span>Training strategy</span><span>Overall rollout L<sub>2</sub> (%)</span><span>Training time (h)</span></div>
+              <div class="abl-rows" id="ablRows"></div>
+              <p class="abl-note">RoboCFD-4D Mini, same DynaSolver architecture. Error bars start at 15%.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -133,7 +178,7 @@
         <h2>RoboCFD-4D Dataset</h2>
         <p class="lead">
           RoboCFD-4D is a temporally resolved CFD benchmark of articulated robots in motion.
-          Below are twenty robots, each under two wind conditions. Clips are muted 50-frame loops; click one to pause.
+          Below are twenty robots, each under two wind conditions. Clips are muted 50-frame loops; <span class="hint">click a clip to pause it</span>.
         </p>
         <div class="clip-grid" id="grid"></div>
       </div>
@@ -209,35 +254,38 @@
             especially for velocity, matching the late-horizon numbers in Table 1
             (18.36% velocity and 61.61% pressure at step 29).
           </p>
-          <div class="fig-row">
-            <figure>
-              <img class="figure" src="static/images/rollout_all.jpg" alt="Overall rollout error" />
-              <figcaption class="caption">Overall</figcaption>
-            </figure>
-            <figure>
-              <img class="figure" src="static/images/rollout_vel.jpg" alt="Velocity rollout error" />
-              <figcaption class="caption">Velocity</figcaption>
-            </figure>
-            <figure>
-              <img class="figure" src="static/images/rollout_pre.jpg" alt="Pressure rollout error" />
-              <figcaption class="caption">Pressure</figcaption>
-            </figure>
+          <div class="fig-row" id="rolloutRow">
+            <figure><div class="roll-svg" data-svg="static/images/rollout_all.svg"></div><figcaption class="caption">Overall</figcaption></figure>
+            <figure><div class="roll-svg" data-svg="static/images/rollout_vel.svg"></div><figcaption class="caption">Velocity</figcaption></figure>
+            <figure><div class="roll-svg" data-svg="static/images/rollout_pre.svg"></div><figcaption class="caption">Pressure</figcaption></figure>
           </div>
-          <p class="caption">Figure 3. Rollout error evolution on RoboCFD-4D Base.</p>
+          <p class="caption">Figure 3. Rollout error evolution on RoboCFD-4D Base; curves are drawn frame by frame along the rollout horizon.</p>
         </div>
 
         <div class="subblock">
           <h3>Accuracy versus training cost</h3>
-          <div class="split">
-            <figure class="split-fig">
-              <img class="figure" src="static/images/train_wall.jpg" alt="Training cost versus overall rollout error" />
-              <figcaption class="caption">Figure 4. Training wall-clock versus overall rollout error.</figcaption>
-            </figure>
+          <div class="split split-cost">
+            <img class="figure cost-img" src="static/images/train_wall.jpg" alt="Training cost versus overall rollout error" />
             <div class="split-copy">
               <p>
-                DynaSolver has the lowest overall rollout error (17.71%, 11.4% below the next-best 19.99%) while staying among the cheapest learned methods to train. Token-space operators skip repeated point-space work; Replay-Augmented Parallel Training keeps dense parallel updates instead of sequential unrolling.
+                Each point is one learned surrogate, placed by its training wall-clock time and its full-rollout error on
+                RoboCFD-4D Base. The lower-left corner is where a method is both accurate and cheap to train.
+              </p>
+              <p>
+                <strong>DynaSolver reaches the lowest overall error</strong> while staying among the cheapest learned
+                methods to train, so it sits alone in that corner.
+              </p>
+              <div class="stats">
+                <div><b>17.71%</b><span>overall rollout error, best of all methods</span></div>
+                <div><b>−11.4%</b><span>relative to the next best, 19.99%</span></div>
+                <div><b>22</b><span>learned surrogates compared</span></div>
+              </div>
+              <p>
+                Two design choices drive this. The token-space operator skips repeated point-space work at every layer,
+                and Replay-Augmented Parallel Training keeps dense, parallel updates instead of sequential unrolling.
               </p>
             </div>
+            <p class="caption cost-cap">Figure 4. Training wall-clock versus overall rollout error.</p>
           </div>
         </div>
 
@@ -246,7 +294,7 @@
           <p>
             Thirty autoregressive rollout frames on three robots (A1, G1, H1-2) at u = 2 m/s and two
             inflow angles. The first panel is the ground-truth field; the rest are point-wise error
-            maps of DynaSolver and five baselines on one shared scale. Click the board to pause or resume.
+            maps of DynaSolver and five baselines on one shared scale. <span class="hint">Click the board to pause or resume.</span>
           </p>
           <div class="cmp-controls">
             <div class="fgroup"><span class="flabel">Case</span><div class="fgroup" id="cmpCaseChips"></div></div>
