@@ -350,7 +350,7 @@ a:hover { text-decoration: underline; }
 .abl-note { margin: 0.6rem 0 0 !important; font-size: 0.8rem; color: var(--muted); text-align: right; }
 
 .split.split-cost { align-items: stretch; gap: 1rem 2.2rem; }
-.cost-left { display: flex; flex-direction: column; justify-content: space-between; gap: 0.9rem; min-width: 0; }
+.cost-left { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
 .split-cost .split-copy { justify-content: space-between; gap: 0.8rem; }
 .split-cost .split-copy p { margin: 0; font-size: 1.02rem; line-height: 1.75; }
 .cost-cap { margin: 0.7rem 0 0; text-align: left !important; }
@@ -650,6 +650,9 @@ a:hover { text-decoration: underline; }
   .cmp-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cmp-pane.ref { grid-row: auto; }
   .cmp-pane.ref .cmp-shot { aspect-ratio: var(--shot-ar); }
+}
+@media (max-width: 960px) {
+  .split.split-cost { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
   .clip-grid { grid-template-columns: 1fr; }

@@ -275,23 +275,20 @@
             </div>
             <div class="split-copy">
               <p>
-                Each point in Figure 4 is one learned surrogate, placed by its training wall-clock time and its
-                full-rollout relative L<sub>2</sub> error on RoboCFD-4D Base. The dashed line marks Persistence,
-                a no-learning baseline that simply copies the last state.
+                Each point is one learned surrogate, placed by its training time and full-rollout error on
+                RoboCFD-4D Base. The dashed line is Persistence, which simply copies the last state.
               </p>
               <p>
-                The lower-left corner is where a method is both accurate and cheap to train. Most baselines trade one
-                for the other: fast models land well above the Persistence line, while the accurate ones need far
-                longer training, often two to eight times as many hours.
+                Most baselines trade one for the other: fast models stay near the Persistence line, while the
+                accurate ones need far longer training.
               </p>
               <p>
-                <strong>DynaSolver sits alone in that corner.</strong> It reaches the lowest overall error, 17.71%,
-                while staying among the cheapest learned methods to train.
+                Two choices avoid this trade-off. The token-space operator skips repeated point-space work, and
+                Replay-Augmented Parallel Training avoids slow sequential unrolling.
               </p>
-              <p>
-                Two design choices drive this. The token-space operator skips repeated point-space work at every
-                layer, and Replay-Augmented Parallel Training keeps dense, parallel updates instead of slow sequential
-                unrolling.
+              <p class="payoff">
+                DynaSolver alone reaches the lower-left corner: the lowest error, <b>17.71%</b>, at one of the
+                lowest training costs.
               </p>
             </div>
           </div>
