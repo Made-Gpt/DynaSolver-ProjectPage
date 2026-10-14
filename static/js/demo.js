@@ -354,13 +354,15 @@ function rollPaint(state, gx){
       return;
     }
     const total = split.clientWidth;
-    let lo = total * 0.4, hi = total * 0.62;
-    for (let i = 0; i < 18; i++){
-      const w = (lo + hi) / 2;
+    let best = 0, bestScore = Infinity;
+    for (let f = 0.4; f <= 0.66; f += 0.005){
+      const w = Math.round(total * f);
       split.style.gridTemplateColumns = w + "px minmax(0, 1fr)";
-      if (stackHeight(left) < stackHeight(copy)) lo = w; else hi = w;
+      const d = stackHeight(left) - stackHeight(copy);
+      const score = d >= -2 ? Math.abs(d) : 1000 - d;
+      if (score < bestScore){ bestScore = score; best = w; }
     }
-    split.style.gridTemplateColumns = hi + "px minmax(0, 1fr)";
+    split.style.gridTemplateColumns = bestScore < 1000 ? best + "px minmax(0, 1fr)" : "minmax(0, 1fr)";
   }
   let raf = 0;
   const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); };
