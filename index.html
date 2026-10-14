@@ -141,7 +141,7 @@
           <img class="figure" src="static/images/training.jpg" alt="Replay-Augmented Parallel Training" />
           <p class="caption">Figure 2. (a–b) sequential unroll and pushforward; (c) parallel teacher forcing; (d) our replay-augmented parallel training.</p>
 
-          <div class="split split-train">
+          <div class="train-stack">
             <div class="split-copy">
               <p class="dilemma">
                 Training an autoregressive solver is a case of <em>you can’t have your cake and eat it</em>:
@@ -265,28 +265,37 @@
         <div class="subblock">
           <h3>Accuracy versus training cost</h3>
           <div class="split split-cost">
-            <img class="figure cost-img" src="static/images/train_wall.jpg" alt="Training cost versus overall rollout error" />
+            <div class="cost-left">
+              <img class="figure cost-img" src="static/images/train_wall.jpg" alt="Training cost versus overall rollout error" />
+              <div class="stats">
+                <div><b>17.71%</b><span>lowest overall error</span></div>
+                <div><b>−11.4%</b><span>vs. next best, 19.99%</span></div>
+                <div><b>21</b><span>learned baselines</span></div>
+              </div>
+            </div>
             <div class="split-copy">
               <p>
-                Each point is one learned surrogate, placed by its training wall-clock time and its full-rollout error on
-                RoboCFD-4D Base. The lower-left corner is where a method is both accurate and cheap to train.
+                Each point in Figure 4 is one learned surrogate, placed by its training wall-clock time and its
+                full-rollout relative L<sub>2</sub> error on RoboCFD-4D Base. The dashed line marks Persistence,
+                a no-learning baseline that simply copies the last state.
               </p>
               <p>
-                <strong>DynaSolver reaches the lowest overall error</strong> while staying among the cheapest learned
-                methods to train, so it sits alone in that corner.
+                The lower-left corner is where a method is both accurate and cheap to train. Most baselines trade one
+                for the other: fast models land well above the Persistence line, while the accurate ones need far
+                longer training, often two to eight times as many hours.
               </p>
-              <div class="stats">
-                <div><b>17.71%</b><span>overall rollout error, best of all methods</span></div>
-                <div><b>−11.4%</b><span>relative to the next best, 19.99%</span></div>
-                <div><b>22</b><span>learned surrogates compared</span></div>
-              </div>
               <p>
-                Two design choices drive this. The token-space operator skips repeated point-space work at every layer,
-                and Replay-Augmented Parallel Training keeps dense, parallel updates instead of sequential unrolling.
+                <strong>DynaSolver sits alone in that corner.</strong> It reaches the lowest overall error, 17.71%,
+                while staying among the cheapest learned methods to train.
+              </p>
+              <p>
+                Two design choices drive this. The token-space operator skips repeated point-space work at every
+                layer, and Replay-Augmented Parallel Training keeps dense, parallel updates instead of slow sequential
+                unrolling.
               </p>
             </div>
-            <p class="caption cost-cap">Figure 4. Training wall-clock versus overall rollout error.</p>
           </div>
+          <p class="caption cost-cap">Figure 4. Training wall-clock versus overall rollout error on RoboCFD-4D Base.</p>
         </div>
 
         <div class="subblock" id="qualitative">
