@@ -349,11 +349,11 @@ a:hover { text-decoration: underline; }
 .abl-row.ours .abl-cell b { color: var(--accent); font-weight: 800; }
 .abl-note { margin: 0.6rem 0 0 !important; font-size: 0.8rem; color: var(--muted); text-align: right; }
 
-.split.split-cost { align-items: stretch; gap: 1rem 2.2rem; }
+.split.split-cost { align-items: stretch; gap: 1rem 2.2rem; max-width: 860px; margin-inline: auto; }
 .cost-left { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
 .split-cost .split-copy { justify-content: space-between; gap: 0.8rem; }
-.split-cost .split-copy p { margin: 0; font-size: 1.02rem; line-height: 1.75; }
-.cost-cap { margin: 0.7rem 0 0; text-align: left !important; }
+.split-cost .split-copy p { margin: 0; font-size: 1.06rem; line-height: 1.75; }
+.caption.cost-cap { max-width: 860px; margin: 0.7rem auto 0; text-align: left !important; }
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; }
 .stats div { padding: 0.65rem 0.8rem; border-radius: 12px; background: #f0fdfa; border: 1px solid #ccfbf1; }
 .stats b { display: block; font-family: "Fraunces", Georgia, serif; font-size: 1.45rem; color: var(--accent); line-height: 1.2; }
