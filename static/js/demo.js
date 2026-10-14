@@ -46,237 +46,168 @@ const clipObserver = new IntersectionObserver(function(entries){
 document.querySelectorAll(".clip").forEach(function(el){ clipObserver.observe(el); });
 
 document.addEventListener("click", function(e){
-  const v = e.target.closest ? e.target.closest("video") : null;
+  const v = e.target.closest ? e.target.closest(".clip video") : null;
   if (!v) return;
   if (v.paused){ v.play().catch(function(){}); } else { v.pause(); }
 });
 
 /* ------------------------------------------------------------------ *
- * Accuracy comparison: reference field vs. predicted error maps
+ * Top nav: solid after the hero, highlight the section on screen
  * ------------------------------------------------------------------ */
-const CMP_DATA = {"cases":{"a1_u4_yaw_p0":{"aspect":1.14811,"colormaps":{"pressure":"coolwarm","pressure_error":"turbo","velocity":"turbo","velocity_error":"turbo"},"frames":[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],"methods":{"abupt":{"10":{"pressure":1.256,"velocity":0.398},"11":{"pressure":1.309,"velocity":0.4022},"12":{"pressure":1.418,"velocity":0.3958},"13":{"pressure":1.474,"velocity":0.4018},"14":{"pressure":1.491,"velocity":0.3939},"15":{"pressure":1.536,"velocity":0.3573},"16":{"pressure":1.604,"velocity":0.3591},"17":{"pressure":1.442,"velocity":0.3586},"18":{"pressure":1.412,"velocity":0.387},"19":{"pressure":1.535,"velocity":0.3774},"20":{"pressure":1.373,"velocity":0.3768},"21":{"pressure":1.429,"velocity":0.4032},"22":{"pressure":1.427,"velocity":0.4075},"23":{"pressure":1.666,"velocity":0.4138},"24":{"pressure":1.705,"velocity":0.4045},"6":{"pressure":1.282,"velocity":0.2994},"7":{"pressure":1.306,"velocity":0.3429},"8":{"pressure":1.175,"velocity":0.3609},"9":{"pressure":1.305,"velocity":0.3781}},"ours":{"10":{"pressure":0.6386,"velocity":0.133},"11":{"pressure":0.5441,"velocity":0.1309},"12":{"pressure":0.4865,"velocity":0.1234},"13":{"pressure":0.5244,"velocity":0.1251},"14":{"pressure":0.5809,"velocity":0.1277},"15":{"pressure":0.7212,"velocity":0.1292},"16":{"pressure":0.7726,"velocity":0.1345},"17":{"pressure":0.6162,"velocity":0.133},"18":{"pressure":0.6272,"velocity":0.1209},"19":{"pressure":0.6978,"velocity":0.1396},"20":{"pressure":0.5922,"velocity":0.1427},"21":{"pressure":0.5933,"velocity":0.156},"22":{"pressure":0.5799,"velocity":0.1545},"23":{"pressure":0.5148,"velocity":0.1369},"24":{"pressure":0.5472,"velocity":0.1365},"6":{"pressure":0.5767,"velocity":0.123},"7":{"pressure":0.5859,"velocity":0.1136},"8":{"pressure":0.6387,"velocity":0.1248},"9":{"pressure":0.6279,"velocity":0.1206}},"physgto":{"10":{"pressure":0.9168,"velocity":0.1711},"11":{"pressure":0.9576,"velocity":0.1659},"12":{"pressure":1.057,"velocity":0.1788},"13":{"pressure":1.094,"velocity":0.2151},"14":{"pressure":1.245,"velocity":0.2305},"15":{"pressure":1.24,"velocity":0.2327},"16":{"pressure":1.249,"velocity":0.2458},"17":{"pressure":1.17,"velocity":0.2316},"18":{"pressure":1.29,"velocity":0.231},"19":{"pressure":1.263,"velocity":0.2537},"20":{"pressure":1.081,"velocity":0.2478},"21":{"pressure":1.085,"velocity":0.2376},"22":{"pressure":1.147,"velocity":0.2353},"23":{"pressure":1.216,"velocity":0.2475},"24":{"pressure":1.224,"velocity":0.2759},"6":{"pressure":0.8463,"velocity":0.1778},"7":{"pressure":0.9649,"velocity":0.1736},"8":{"pressure":0.8962,"velocity":0.1768},"9":{"pressure":0.7594,"velocity":0.1682}}},"pressure_error_clim":[0.0,0.13506042387286205],"reference_clim":{"pressure":{"10":[-4.992,5.613],"11":[-5.028,5.768],"12":[-5.421,5.467],"13":[-5.406,5.056],"14":[-5.475,4.807],"15":[-5.229,5.186],"16":[-5.327,4.123],"17":[-5.454,4.713],"18":[-5.497,4.544],"19":[-5.318,5.194],"20":[-5.258,5.352],"21":[-5.269,5.016],"22":[-5.102,5.424],"23":[-5.196,5.455],"24":[-5.626,5.0],"6":[-5.56,4.504],"7":[-5.747,4.688],"8":[-5.45,5.086],"9":[-5.036,4.435]},"velocity":{"10":[0.02032,0.5905],"11":[0.01884,0.682],"12":[0.02676,0.6052],"13":[0.03,0.6334],"14":[0.02913,0.5984],"15":[0.0208,0.6383],"16":[0.01822,0.6285],"17":[0.02475,0.5861],"18":[0.03213,0.5982],"19":[0.03497,0.6191],"20":[0.02993,0.5818],"21":[0.02122,0.5847],"22":[0.01815,0.6996],"23":[0.02599,0.5994],"24":[0.03011,0.6269],"6":[0.02542,0.5867],"7":[0.03193,0.6107],"8":[0.03446,0.6195],"9":[0.029,0.5846]}},"u_ref":4.0,"velocity_error_clim":[0.0,0.12265030666682551]},"h1_2_u2_yaw_m20":{"aspect":0.685,"colormaps":{"pressure":"coolwarm","pressure_error":"turbo","velocity":"turbo","velocity_error":"turbo"},"frames":[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],"methods":{"abupt":{"10":{"pressure":0.4108,"velocity":0.3315},"11":{"pressure":0.4617,"velocity":0.3346},"12":{"pressure":0.4636,"velocity":0.291},"13":{"pressure":0.4813,"velocity":0.3192},"14":{"pressure":0.492,"velocity":0.3074},"15":{"pressure":0.5394,"velocity":0.3326},"16":{"pressure":0.482,"velocity":0.3174},"17":{"pressure":0.4935,"velocity":0.3536},"18":{"pressure":0.471,"velocity":0.3353},"19":{"pressure":0.5446,"velocity":0.3323},"20":{"pressure":0.4463,"velocity":0.3011},"21":{"pressure":0.5206,"velocity":0.3054},"22":{"pressure":0.5017,"velocity":0.3579},"23":{"pressure":0.4312,"velocity":0.3311},"24":{"pressure":0.445,"velocity":0.3114},"6":{"pressure":0.4288,"velocity":0.325},"7":{"pressure":0.4614,"velocity":0.3295},"8":{"pressure":0.4398,"velocity":0.3221},"9":{"pressure":0.4665,"velocity":0.3492}},"ours":{"10":{"pressure":0.4484,"velocity":0.2403},"11":{"pressure":0.5135,"velocity":0.2686},"12":{"pressure":0.4888,"velocity":0.2521},"13":{"pressure":0.5955,"velocity":0.2853},"14":{"pressure":0.6267,"velocity":0.2743},"15":{"pressure":0.5611,"velocity":0.2665},"16":{"pressure":0.4544,"velocity":0.2397},"17":{"pressure":0.4105,"velocity":0.2661},"18":{"pressure":0.4051,"velocity":0.2693},"19":{"pressure":0.4958,"velocity":0.286},"20":{"pressure":0.4275,"velocity":0.292},"21":{"pressure":0.5093,"velocity":0.2953},"22":{"pressure":0.4651,"velocity":0.3158},"23":{"pressure":0.3983,"velocity":0.3049},"24":{"pressure":0.43,"velocity":0.2537},"6":{"pressure":0.3663,"velocity":0.2523},"7":{"pressure":0.3545,"velocity":0.2467},"8":{"pressure":0.3959,"velocity":0.2513},"9":{"pressure":0.4119,"velocity":0.255}},"physgto":{"10":{"pressure":0.5839,"velocity":0.3594},"11":{"pressure":0.5558,"velocity":0.3632},"12":{"pressure":0.5867,"velocity":0.3638},"13":{"pressure":0.6454,"velocity":0.3566},"14":{"pressure":0.5968,"velocity":0.3586},"15":{"pressure":0.5697,"velocity":0.3121},"16":{"pressure":0.5665,"velocity":0.3173},"17":{"pressure":0.5476,"velocity":0.3258},"18":{"pressure":0.5493,"velocity":0.3404},"19":{"pressure":0.6179,"velocity":0.3324},"20":{"pressure":0.6016,"velocity":0.3504},"21":{"pressure":0.6482,"velocity":0.3689},"22":{"pressure":0.6575,"velocity":0.4321},"23":{"pressure":0.5536,"velocity":0.4321},"24":{"pressure":0.5751,"velocity":0.4087},"6":{"pressure":0.5625,"velocity":0.3141},"7":{"pressure":0.5561,"velocity":0.3234},"8":{"pressure":0.4924,"velocity":0.3286},"9":{"pressure":0.5482,"velocity":0.3517}}},"pressure_error_clim":[0.0,0.22570549990333594],"reference_clim":{"pressure":{"10":[-4.077,5.216],"11":[-4.353,4.833],"12":[-5.328,5.219],"13":[-5.441,5.509],"14":[-5.297,4.905],"15":[-4.238,4.53],"16":[-3.668,4.835],"17":[-3.839,4.171],"18":[-4.213,4.631],"19":[-4.985,5.317],"20":[-6.41,4.731],"21":[-5.871,4.635],"22":[-5.338,5.782],"23":[-4.76,5.067],"24":[-4.682,4.524],"6":[-6.199,4.514],"7":[-4.111,4.828],"8":[-3.534,4.968],"9":[-3.383,4.997]},"velocity":{"10":[0.04671,0.596],"11":[0.07204,0.7137],"12":[0.09099,0.8972],"13":[0.09596,1.005],"14":[0.09369,1.019],"15":[0.08223,0.9147],"16":[0.06325,0.7656],"17":[0.03731,0.6224],"18":[0.0384,0.5609],"19":[0.06139,0.6199],"20":[0.08088,0.8177],"21":[0.09256,0.9786],"22":[0.09616,1.022],"23":[0.08583,0.9418],"24":[0.07043,0.7729],"6":[0.09105,0.9894],"7":[0.07525,0.8357],"8":[0.05208,0.6656],"9":[0.02625,0.5877]}},"u_ref":2.0,"velocity_error_clim":[0.0,0.39108097056978364]}},"reference_note":"Reference panels are recolored per frame from the ground-truth field; error panels share one fixed per-case scale.","scale_strips":{"coolwarm":"scales/coolwarm.webp","turbo":"scales/turbo.webp"}};
+
+const topNav = document.getElementById("topnav");
+new IntersectionObserver(function(entries){
+  topNav.classList.toggle("solid", !entries[0].isIntersecting);
+}, { rootMargin: "-64px 0px 0px 0px" }).observe(document.getElementById("hero"));
+
+const navLinks = Array.from(document.querySelectorAll("#topnav .nav-links a"));
+const navSpy = new IntersectionObserver(function(entries){
+  for (const entry of entries){
+    if (!entry.isIntersecting) continue;
+    const id = "#" + entry.target.id;
+    navLinks.forEach(a => a.classList.toggle("on", a.getAttribute("href") === id));
+  }
+}, { rootMargin: "-45% 0px -50% 0px" });
+navLinks.forEach(function(a){
+  const t = document.querySelector(a.getAttribute("href"));
+  if (t) navSpy.observe(t);
+});
+
+/* ------------------------------------------------------------------ *
+ * Qualitative comparison: GT field + per-method error maps, 30 frames
+ * ------------------------------------------------------------------ */
 
 const CMP_METHODS = [
-  { key: "reference", label: "Reference (data)", ref: true },
-  { key: "ours", label: "DynaSolver" },
-  { key: "abupt", label: "ABUPT" },
-  { key: "physgto", label: "PhysGTO" }
+  { key: "gt", label: "Ground truth", ref: true },
+  { key: "ours", label: "DynaSolver (Ours)", ours: true },
+  { key: "abupt", label: "AB-UPT" },
+  { key: "physgto", label: "PhysGTO" },
+  { key: "transolver", label: "Transolver" },
+  { key: "linearno", label: "LinearNO" },
+  { key: "p3d", label: "P3D" }
 ];
-const CMP_CASES = Object.keys(CMP_DATA.cases).sort();
-const CMP_MODES = [
-  { key: "velocity_error", label: "Velocity" },
-  { key: "pressure_error", label: "Pressure" }
+const CMP_QUANTITIES = [
+  { key: "velocity", label: "Velocity" },
+  { key: "pressure", label: "Pressure" }
 ];
-const CMP_CASE_LABEL = {
-  a1_u4_yaw_p0: "a1 · quadruped",
-  h1_2_u2_yaw_m20: "h1_2 · humanoid"
-};
-const cmpState = { caseId: CMP_CASES[0], mode: "velocity_error", frame: 0, playing: false, timer: 0 };
-const cmpCache = new Map();
+const CMP_ROBOT = { a1: "A1", g1: "G1", h1_2: "H1-2" };
+const CMP_FRAME_MS = 100;
 
-const cmpCase = () => CMP_DATA.cases[cmpState.caseId];
-const cmpFrames = () => cmpCase().frames;
-const cmpAsset = (method, mode, frame) =>
-  ASSET("compare/" + cmpState.caseId + "/" + method + "/" + mode + "/" + String(frame).padStart(4, "0") + ".webp");
+const cmp = { data: null, caseId: null, quantity: "velocity", frame: 0, playing: false, timer: 0, cache: new Set() };
 
-/* Mean of the per-frame median surface error over the displayed frames. */
-function cmpMean(method, quantity){
-  const table = cmpCase().methods[method];
-  if (!table) return null;
-  const vals = [];
-  for (const f of cmpFrames()){
-    const row = table[String(f)];
-    if (row && typeof row[quantity] === "number") vals.push(row[quantity]);
-  }
-  if (!vals.length) return null;
-  return vals.reduce((a, b) => a + b, 0) / vals.length;
+function cmpCaseLabel(id){
+  const m = /^(.*)_u(\d+)_yaw_([pm])(\d+)$/.exec(id);
+  if (!m) return id;
+  const yaw = m[4] === "0" ? "0°" : (m[3] === "m" ? "−" : "+") + m[4] + "°";
+  return (CMP_ROBOT[m[1]] || m[1]) + " · yaw " + yaw;
 }
+const cmpCase = () => cmp.data.cases[cmp.caseId];
+const cmpSrc = (method, frame) =>
+  ASSET("compare/" + cmp.caseId + "/" + method + "/" + cmp.quantity + "/" + String(frame).padStart(4, "0") + ".webp");
 
 function cmpPreload(){
-  const mode = cmpState.mode;
-  const key = cmpState.caseId + "|" + mode;
-  if (cmpCache.has(key)) return;
-  const imgs = [];
-  for (const m of CMP_METHODS){
-    if (m.ref && mode !== "velocity_error" && mode !== "pressure_error") continue;
-    for (const f of cmpFrames()){
-      const src = cmpAsset(m.ref ? "reference" : m.key, m.ref ? mode.replace("_error", "") : mode, f);
-      const im = new Image();
-      im.src = src;
-      imgs.push(im);
-    }
+  const key = cmp.caseId + "|" + cmp.quantity;
+  if (cmp.cache.has(key)) return;
+  cmp.cache.add(key);
+  for (let f = 0; f < cmpCase().frames; f++){
+    for (const m of CMP_METHODS){ new Image().src = cmpSrc(m.key, f); }
   }
-  cmpCache.set(key, imgs);
 }
 
 function cmpPaint(){
-  const mode = cmpState.mode;
-  const quantity = mode === "velocity_error" ? "velocity" : "pressure";
-  const frames = cmpFrames();
-  const frame = frames[cmpState.frame];
-  const caseData = cmpCase();
-  document.getElementById("cmpBoard").style.setProperty("--shot-ar", "1 / 1");
-
   for (const m of CMP_METHODS){
-    const pane = document.querySelector('.cmp-pane[data-method="' + m.key + '"]');
-    if (!pane) continue;
-    const img = pane.querySelector("img");
-    const src = cmpAsset(m.ref ? "reference" : m.key, m.ref ? mode.replace("_error", "") : mode, frame);
+    const img = document.querySelector('.cmp-pane[data-method="' + m.key + '"] img');
+    const src = cmpSrc(m.key, cmp.frame);
     if (img.getAttribute("src") !== src) img.src = src;
-    img.alt = m.label + " — " + cmpState.caseId + " — " + quantity + " — frame " + frame;
-
-    const line = pane.querySelector(".cmp-metric");
-    if (m.ref){
-      line.innerHTML = "reference simulation field<br>frame <b>" + frame + "</b> of " + frames[frames.length - 1];
-      continue;
-    }
-    const val = cmpMean(m.key, quantity);
-    const base = Math.min(...["ours", "abupt", "physgto"].map(k => cmpMean(k, quantity)).filter(v => v !== null));
-    const ratio = val !== null && base > 0 ? (val / base) : null;
-    let tag = "";
-    if (ratio !== null){
-      if (Math.abs(ratio - 1) < 0.02) tag = '<span class="win">best of the three</span>';
-      else tag = (ratio > 1 ? (ratio.toFixed(1) + "x the best") : "<span class=\"win\">best</span>");
-    }
-    line.innerHTML = "median error <b>" + (val === null ? "—" : val.toFixed(4)) + "</b><br>" + tag;
+    img.alt = m.label + ", " + cmpCaseLabel(cmp.caseId) + ", " + cmp.quantity + ", frame " + cmp.frame;
   }
-
-  const sub = document.getElementById("cmpSub");
-  if (sub){
-    sub.textContent =
-      cmpState.caseId + " · u = " + caseData.u_ref + " m/s · frames " + frames[0] + "–" + frames[frames.length - 1] +
-      " · " + (quantity === "velocity" ? "velocity |ΔU|/U∞" : "pressure |p_pred − p_ref|");
-  }
-  cmpPaintScales();
+  document.getElementById("cmpFrame").textContent =
+    "frame " + String(cmp.frame + 1).padStart(2, "0") + " / " + cmpCase().frames + (cmp.playing ? "" : " · paused");
 }
 
-/* Exact colormap strips, with an inline gradient underneath so a bar can never be blank. */
 const CMP_RAMPS_CSS = {"turbo": "linear-gradient(90deg,rgb(48,18,59) 0%,rgb(59,47,128) 4%,rgb(67,78,186) 8%,rgb(70,107,227) 12%,rgb(70,133,250) 17%,rgb(59,160,253) 21%,rgb(40,188,235) 25%,rgb(26,210,210) 29%,rgb(26,228,182) 33%,rgb(50,242,152) 38%,rgb(85,250,118) 42%,rgb(128,255,83) 46%,rgb(164,252,60) 50%,rgb(190,244,52) 54%,rgb(217,228,54) 58%,rgb(238,207,58) 62%,rgb(250,186,57) 67%,rgb(254,158,47) 71%,rgb(251,126,33) 75%,rgb(242,96,20) 79%,rgb(228,69,10) 83%,rgb(208,47,5) 88%,rgb(185,30,2) 92%,rgb(155,15,1) 96%,rgb(122,4,3) 100%)", "coolwarm": "linear-gradient(90deg,rgb(59,76,192) 0%,rgb(70,94,207) 4%,rgb(84,112,222) 8%,rgb(98,130,234) 12%,rgb(111,146,243) 17%,rgb(126,161,250) 21%,rgb(141,176,254) 25%,rgb(155,188,255) 29%,rgb(170,199,253) 33%,rgb(185,208,249) 38%,rgb(197,214,242) 42%,rgb(210,219,232) 46%,rgb(221,220,220) 50%,rgb(231,215,206) 54%,rgb(239,206,189) 58%,rgb(245,196,172) 62%,rgb(247,184,156) 67%,rgb(247,169,139) 71%,rgb(244,152,122) 75%,rgb(239,136,107) 79%,rgb(231,116,91) 83%,rgb(221,95,75) 88%,rgb(209,73,63) 92%,rgb(195,46,49) 96%,rgb(180,4,38) 100%)"};
-function CMP_RAMP(name){
-  return 'url("' + ASSET("compare/scales/" + name + ".webp") + '"), ' + CMP_RAMPS_CSS[name];
-}
+
 function cmpFmt(v, lo, hi){
   const span = Math.abs(hi - lo);
-  if (span <= 0.02) return v.toFixed(3);
-  if (span <= 0.5) return v.toFixed(3);
-  if (span <= 5) return v.toFixed(2);
-  return v.toFixed(1);
+  if (span <= 1) return v.toFixed(2);
+  if (span <= 10) return v.toFixed(1);
+  return v.toFixed(0);
 }
-function cmpMarks(n){
-  let out = "";
-  for (let i = 0; i < n; i++){
-    out += '<i style="left:' + ((i / (n - 1)) * 100).toFixed(2) + '%"></i>';
+function cmpRampBlock(title, note, ramp, lo, hi){
+  let marks = "", ticks = "";
+  for (let i = 0; i < 5; i++){
+    marks += '<i style="left:' + (i * 25) + '%"></i>';
+    ticks += "<span>" + cmpFmt(lo + (hi - lo) * i / 4, lo, hi) + "</span>";
   }
-  return out;
-}
-function cmpTicks(lo, hi, n){
-  let out = "";
-  for (let i = 0; i < n; i++){
-    const v = lo + (hi - lo) * i / (n - 1);
-    out += "<span>" + cmpFmt(v, lo, hi) + "</span>";
-  }
-  return out;
-}
-function cmpRampBlock(id, lo, hi){
-  return '<div class="ramp">' +
-    '<div class="bar" id="' + id + '"><div class="marks">' + cmpMarks(5) + "</div></div>" +
-    '<div class="ticks">' + cmpTicks(lo, hi, 5) + "</div>" +
-  "</div>";
+  return '<div class="cmp-scale"><div class="t"><b>' + title + "</b>" + note + "</div>" +
+    '<div class="bar" style="background-image:' + CMP_RAMPS_CSS[ramp] + '"><div class="marks">' + marks + "</div></div>" +
+    '<div class="ticks">' + ticks + "</div></div>";
 }
 function cmpPaintScales(){
-  const mode = cmpState.mode;
-  const quantity = mode === "velocity_error" ? "velocity" : "pressure";
-  const speed = quantity === "velocity";
-  const frame = cmpFrames()[cmpState.frame];
-  const clim = cmpCase()[mode + "_clim"];
-  const refTable = (cmpCase().reference_clim || {})[quantity] || {};
-  const rc = refTable[String(frame)] || null;
-  const refTitle = speed ? "Reference · |U| / U∞" : "Reference · pressure p";
-  const errTitle = speed ? "Error · |ΔU| / U∞" : "Error · |p_pred − p_ref|";
-  const root = document.getElementById("cmpScales");
-  root.innerHTML =
-    '<div class="cmp-scale"><div class="t"><b>' + refTitle + "</b>" +
-      (rc ? "per-frame scale" : "") + "</div>" +
-      (rc ? cmpRampBlock("cmpRefBar", rc[0], rc[1]) : "") + "</div>" +
-    '<div class="cmp-scale"><div class="t"><b>' + errTitle + "</b>" +
-      "shared across DynaSolver, ABUPT, PhysGTO</div>" +
-      cmpRampBlock("cmpErrBar", clim[0], clim[1]) + "</div>";
-  const refBar = document.getElementById("cmpRefBar");
-  const errBar = document.getElementById("cmpErrBar");
-  if (refBar) refBar.style.backgroundImage = CMP_RAMP(speed ? "turbo" : "coolwarm");
-  if (errBar) errBar.style.backgroundImage = CMP_RAMP("turbo");
+  const speed = cmp.quantity === "velocity";
+  const clim = cmpCase().clim;
+  const field = clim[cmp.quantity];
+  const err = clim[cmp.quantity + "_error"];
+  document.getElementById("cmpScales").innerHTML =
+    cmpRampBlock(speed ? "Ground truth · |U| / U∞" : "Ground truth · pressure p",
+      "fixed scale for this case", speed ? "turbo" : "coolwarm", field[0], field[1]) +
+    cmpRampBlock(speed ? "Error · |ΔU| / U∞" : "Error · |p_pred − p_ref|",
+      "shared by all six methods", "turbo", err[0], err[1]);
 }
 
-function cmpPaintNote(){
-  const span = cmpFrames();
-  const note = document.getElementById("cmpNote");
-  if (!note) return;
-  note.innerHTML =
-    "Looping frames " + span[0] + "–" + span[span.length - 1] + " for <b>" + cmpState.caseId + "</b>. " +
-    "Each panel uses the same white square; images keep their native aspect and sit in the center. " +
-    "The reference colormap is rebuilt per frame; the three error maps share one fixed per-case scale. " +
-    "Click a panel to pause or resume.";
-}
-
-function cmpSetCase(id){
-  cmpState.caseId = id;
-  document.querySelectorAll("#cmpCaseChips .chip").forEach(c => c.classList.toggle("sel", c.dataset.caseid === id));
-  cmpPreload(); cmpPaint(); cmpPaintNote();
-}
-function cmpSetMode(mode){
-  cmpState.mode = mode;
-  document.querySelectorAll("#cmpModeChips .chip").forEach(c => c.classList.toggle("sel", c.dataset.mode === mode));
-  cmpPreload(); cmpPaint(); cmpPaintNote();
+function cmpRefresh(){
+  cmpPreload(); cmpPaint(); cmpPaintScales();
+  document.querySelectorAll("#cmpCaseChips .chip").forEach(c => c.classList.toggle("sel", c.dataset.caseid === cmp.caseId));
+  document.querySelectorAll("#cmpModeChips .chip").forEach(c => c.classList.toggle("sel", c.dataset.q === cmp.quantity));
+  document.getElementById("cmpBoard").style.setProperty("--shot-ar", String(cmpCase().aspect));
 }
 
 function cmpPlay(){
-  if (cmpState.playing) return;
-  cmpPreload();
-  cmpState.playing = true;
-  cmpState.timer = setInterval(() => {
-    cmpState.frame = (cmpState.frame + 1) % cmpFrames().length;
+  if (cmp.playing || !cmp.data) return;
+  cmp.playing = true;
+  cmp.timer = setInterval(function(){
+    cmp.frame = (cmp.frame + 1) % cmpCase().frames;
     cmpPaint();
-  }, 100);
+  }, CMP_FRAME_MS);
+  cmpPaint();
 }
 function cmpStop(){
-  cmpState.playing = false;
-  clearInterval(cmpState.timer);
+  cmp.playing = false;
+  clearInterval(cmp.timer);
+  if (cmp.data) cmpPaint();
 }
 
-function cmpBuild(){
-  document.getElementById("cmpCaseChips").innerHTML = CMP_CASES.map(id =>
-    '<span class="chip' + (id === cmpState.caseId ? " sel" : "") + '" data-caseid="' + id + '">' +
-    (CMP_CASE_LABEL[id] || id) + "</span>").join("");
-  document.getElementById("cmpModeChips").innerHTML = CMP_MODES.map(m =>
-    '<span class="chip' + (m.key === cmpState.mode ? " sel" : "") + '" data-mode="' + m.key + '">' + m.label + "</span>").join("");
+function cmpBuild(data){
+  cmp.data = data;
+  const ids = Object.keys(data.cases);
+  cmp.caseId = ids[0];
 
+  document.getElementById("cmpCaseChips").innerHTML = ids.map(id =>
+    '<span class="chip" data-caseid="' + id + '">' + cmpCaseLabel(id) + "</span>").join("");
+  document.getElementById("cmpModeChips").innerHTML = CMP_QUANTITIES.map(q =>
+    '<span class="chip" data-q="' + q.key + '">' + q.label + "</span>").join("");
   document.getElementById("cmpBoard").innerHTML = CMP_METHODS.map(m =>
-    '<figure class="cmp-pane ' + (m.ref ? "ref" : m.key === "ours" ? "ours" : "") + '" data-method="' + m.key + '">' +
-      '<div class="cmp-pane-head"><span class="nm">' + m.label + '</span><span class="badge">' +
-      (m.ref ? "ground truth" : "error map") + "</span></div>" +
+    '<figure class="cmp-pane' + (m.ref ? " ref" : "") + (m.ours ? " ours" : "") + '" data-method="' + m.key + '">' +
       '<div class="cmp-shot"><img alt=""></div>' +
-      '<div class="cmp-metric"></div></figure>').join("");
+      '<figcaption>' + m.label + '<span class="badge">' + (m.ref ? "field" : "error") + "</span></figcaption></figure>").join("");
 
-  document.getElementById("cmpCaseChips").addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip"); if (chip) cmpSetCase(chip.dataset.caseid);
+  document.getElementById("cmpCaseChips").addEventListener("click", function(e){
+    const chip = e.target.closest(".chip");
+    if (chip){ cmp.caseId = chip.dataset.caseid; cmpRefresh(); }
   });
-  document.getElementById("cmpModeChips").addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip"); if (chip) cmpSetMode(chip.dataset.mode);
+  document.getElementById("cmpModeChips").addEventListener("click", function(e){
+    const chip = e.target.closest(".chip");
+    if (chip){ cmp.quantity = chip.dataset.q; cmpRefresh(); }
   });
-  document.getElementById("cmpBoard").addEventListener("click", () => {
-    if (cmpState.playing) cmpStop(); else cmpPlay();
+  document.getElementById("cmpBoard").addEventListener("click", function(){
+    if (cmp.playing) cmpStop(); else cmpPlay();
   });
-  cmpPreload(); cmpPaint(); cmpPaintScales(); cmpPaintNote(); cmpPlay();
+
+  cmpRefresh();
+  new IntersectionObserver(function(entries){
+    if (entries[0].isIntersecting) cmpPlay(); else cmpStop();
+  }, { threshold: 0.1 }).observe(document.getElementById("cmpBoard"));
 }
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) cmpStop();
-  else cmpPlay();
-});
-cmpBuild();
-(function cmpHash(){
-  const h = location.hash || "";
-  const c = /[#&]case=([^&]+)/.exec(h);
-  const m = /[#&]mode=([^&]+)/.exec(h);
-  if (c && CMP_DATA.cases[decodeURIComponent(c[1])]) cmpSetCase(decodeURIComponent(c[1]));
-  if (m && CMP_MODES.some(x => x.key === decodeURIComponent(m[1]))) cmpSetMode(decodeURIComponent(m[1]));
-})();
+
+fetch(ASSET("compare/compare_data.json")).then(r => r.json()).then(cmpBuild);
+document.addEventListener("visibilitychange", function(){ if (document.hidden) cmpStop(); });

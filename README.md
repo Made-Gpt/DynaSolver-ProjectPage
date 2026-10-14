@@ -1,8 +1,12 @@
 # DynaSolver Project Page
 
-Academic project homepage for **DynaSolver**. The comparison board and CFD clips are embedded in `index.html`.
+Academic project homepage for **DynaSolver**: a full-screen video hero, then Video, Abstract, Method, Dataset, Experiments and Citation sections in `index.html`.
 
-Top links: Paper and Code only.
+The qualitative comparison frames in `static/demo/compare/` are generated from the paper renders:
+
+```bash
+python3 tools/build_compare.py /path/to/paper_vis_g1_h12_a1_u2_yaw0_m20_fixedcam static/demo/compare
+```
 
 ## Local preview
 

@@ -11,34 +11,65 @@
   <link rel="stylesheet" href="static/css/style.css" />
 </head>
 <body>
-  <header class="hero wrap">
-    <h1>DynaSolver: A Neural Operator for Autoregressive 4D Flow Prediction with Dynamic Boundaries</h1>
-    <p class="authors">
-      <a href="https://scholar.google.com/citations?user=ezQHNKwAAAAJ&hl=en">Rui Qian</a><sup>1,*</sup>,
-      Shibo Dai<sup>1,*</sup>,
-      Mengjun Lin<sup>1,*</sup>,
-      Yuk-Kit Hou<sup>2</sup>,
-      Saining Zhang<sup>3</sup>,
-      Junhao Chen<sup>1</sup>,
-      Hao Zhao<sup>1</sup>,
-      Chaojian Li<sup>4,†</sup>
-    </p>
-    <p class="affiliations">
-      <sup>1</sup>Tsinghua University &nbsp;&nbsp;
-      <sup>2</sup>Peking University &nbsp;&nbsp;
-      <sup>3</sup>Nanyang Technological University &nbsp;&nbsp;
-      <sup>4</sup>The Hong Kong University of Science and Technology
-    </p>
-    <p class="note">* Equal contribution. &nbsp; † Corresponding author.</p>
-    <div class="links">
-      <a class="btn" href="static/paper/DynaSolver.pdf">Paper</a>
-      <a class="btn secondary" href="https://github.com/DynaSolver/DynaSolver_Code">Code</a>
+  <nav class="topnav" id="topnav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#hero">DynaSolver</a>
+      <div class="nav-links">
+        <a href="#video">Video</a>
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#experiments">Experiments</a>
+        <a href="#citation">Citation</a>
+      </div>
     </div>
+  </nav>
+
+  <header class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="static/video/hero.jpg">
+      <source src="static/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <h1 class="hero-name">DynaSolver</h1>
+      <p class="hero-title">A Neural Operator for Autoregressive 4D Flow Prediction with Dynamic Boundaries</p>
+      <p class="authors">
+        <a href="https://scholar.google.com/citations?user=ezQHNKwAAAAJ&hl=en">Rui Qian</a><sup>1,*</sup>,
+        Shibo Dai<sup>1,*</sup>,
+        Mengjun Lin<sup>1,*</sup>,
+        Yuk-Kit Hou<sup>2</sup>,
+        Saining Zhang<sup>3</sup>,
+        Junhao Chen<sup>1</sup>,
+        Hao Zhao<sup>1</sup>,
+        Chaojian Li<sup>4,†</sup>
+      </p>
+      <p class="affiliations">
+        <sup>1</sup>Tsinghua University &nbsp;
+        <sup>2</sup>Peking University &nbsp;
+        <sup>3</sup>Nanyang Technological University &nbsp;
+        <sup>4</sup>The Hong Kong University of Science and Technology
+      </p>
+      <p class="note">* Equal contribution. &nbsp; † Corresponding author.</p>
+      <div class="links">
+        <a class="btn" href="static/paper/DynaSolver.pdf">Paper</a>
+        <a class="btn secondary" href="https://github.com/DynaSolver/DynaSolver_Code">Code</a>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#video" aria-label="Scroll down"><span></span></a>
   </header>
 
-  <main class="wrap">
-    <section>
-      <div class="card">
+  <main>
+    <section class="band" id="video">
+      <div class="wrap">
+        <h2>Video</h2>
+        <video class="demo-video" controls preload="metadata" playsinline poster="static/video/demo.jpg">
+          <source src="static/video/demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </section>
+
+    <section class="band alt" id="abstract">
+      <div class="wrap narrow">
         <h2>Abstract</h2>
         <p>
           Neural operators provide efficient surrogates for computational fluid dynamics (CFD),
@@ -62,8 +93,8 @@
       </div>
     </section>
 
-    <section>
-      <div class="card">
+    <section class="band" id="method">
+      <div class="wrap">
         <h2>Method</h2>
         <div class="subblock">
           <h3>Efficient token-space pipeline</h3>
@@ -97,10 +128,20 @@
       </div>
     </section>
 
-    <section>
-      <div class="card">
-        <h2>Experiments</h2>
+    <section class="band alt" id="dataset">
+      <div class="wrap">
+        <h2>RoboCFD-4D Dataset</h2>
+        <p class="lead">
+          RoboCFD-4D is a temporally resolved CFD benchmark of articulated robots in motion.
+          Below are twenty robots, each under two wind conditions. Clips are muted 50-frame loops; click one to pause.
+        </p>
+        <div class="clip-grid" id="grid"></div>
+      </div>
+    </section>
 
+    <section class="band" id="experiments">
+      <div class="wrap">
+        <h2>Experiments</h2>
         <div class="subblock">
           <h3>Quantitative comparison</h3>
           <p>
@@ -199,34 +240,28 @@
             </div>
           </div>
         </div>
+
+        <div class="subblock" id="qualitative">
+          <h3>Qualitative comparison</h3>
+          <p>
+            Thirty autoregressive rollout frames on three robots (A1, G1, H1-2) at u = 2 m/s and two
+            inflow angles. The first panel is the ground-truth field; the rest are point-wise error
+            maps of DynaSolver and five baselines on one shared scale. Click the board to pause or resume.
+          </p>
+          <div class="cmp-controls">
+            <div class="fgroup"><span class="flabel">Case</span><div class="fgroup" id="cmpCaseChips"></div></div>
+            <div class="sep"></div>
+            <div class="fgroup"><span class="flabel">Quantity</span><div class="fgroup" id="cmpModeChips"></div></div>
+            <span class="cmp-frame" id="cmpFrame"></span>
+          </div>
+          <div class="cmp-board" id="cmpBoard"></div>
+          <div class="cmp-scales" id="cmpScales"></div>
+        </div>
       </div>
     </section>
 
-    <section class="card cmp" id="accuracy">
-      <h2>Qualitative comparison</h2>
-      <p>
-        Looping error maps of DynaSolver, ABUPT, and PhysGTO against the WaterLily reference.
-        Click a panel to pause, same as the clips below.
-      </p>
-      <p class="cmp-sub" id="cmpSub"></p>
-      <div class="cmp-controls">
-        <div class="fgroup"><span class="flabel">Case</span><div class="fgroup" id="cmpCaseChips"></div></div>
-        <div class="sep"></div>
-        <div class="fgroup"><span class="flabel">Quantity</span><div class="fgroup" id="cmpModeChips"></div></div>
-      </div>
-      <div class="cmp-board" id="cmpBoard"></div>
-      <div class="cmp-scales" id="cmpScales"></div>
-      <p class="cmp-note" id="cmpNote"></p>
-    </section>
-
-    <section class="card" id="clips">
-      <h2>RoboCFD-4D clips</h2>
-      <p>Twenty robots, two wind conditions each. Click a clip to pause. Each loop is muted and 50 frames.</p>
-      <div class="clip-grid" id="grid"></div>
-    </section>
-
-    <section id="bibtex">
-      <div class="card">
+    <section class="band alt" id="citation">
+      <div class="wrap">
         <h2>Citation</h2>
         <pre class="bibtex">@article{qian2026dynasolver,
   title   = {DynaSolver: A Neural Operator for Autoregressive 4D Flow Prediction with Dynamic Boundaries},
@@ -238,7 +273,7 @@
     </section>
   </main>
 
-  <footer class="footer wrap">
+  <footer class="footer">
     DynaSolver project page
   </footer>
   <script src="static/js/demo.js"></script>
