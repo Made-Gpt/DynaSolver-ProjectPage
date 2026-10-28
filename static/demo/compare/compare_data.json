@@ -8,148 +8,24 @@
   "linearno",
   "p3d"
  ],
- "quantities": [
-  "velocity",
-  "pressure"
- ],
  "cases": {
-  "a1_u2_yaw_p0": {
-   "u_ref": 2.0,
+  "a1": {
    "frames": 30,
-   "aspect": 1.0756,
-   "clim": {
-    "velocity": [
-     0.06001228760495527,
-     0.6557795411231225
-    ],
-    "pressure": [
-     -1.9237892150878906,
-     2.158502531051636
-    ],
-    "velocity_error": [
-     0.0,
-     0.32107785306189224
-    ],
-    "pressure_error": [
-     0.0,
-     0.20893928468713877
-    ]
-   }
+   "aspect": 1.0,
+   "fieldBar": "compare/a1/colorbars/gt_colorbar_h.png",
+   "errorBar": "compare/a1/colorbars/velocity_error_colorbar_h.png"
   },
-  "a1_u2_yaw_m20": {
-   "u_ref": 2.0,
+  "g1": {
    "frames": 30,
-   "aspect": 1.1268,
-   "clim": {
-    "velocity": [
-     0.07206602535535121,
-     0.6785651300572372
-    ],
-    "pressure": [
-     -2.0675240039825438,
-     2.580456590652466
-    ],
-    "velocity_error": [
-     0.0,
-     0.4199920456043122
-    ],
-    "pressure_error": [
-     0.0,
-     0.3130776549171349
-    ]
-   }
+   "aspect": 1.0,
+   "fieldBar": "compare/g1/colorbars/gt_colorbar_h.png",
+   "errorBar": "compare/g1/colorbars/velocity_error_colorbar_h.png"
   },
-  "g1_u2_yaw_p0": {
-   "u_ref": 2.0,
+  "h1_2": {
    "frames": 30,
-   "aspect": 0.7953,
-   "clim": {
-    "velocity": [
-     0.07230982048321634,
-     0.7415851670426697
-    ],
-    "pressure": [
-     -4.487568473815918,
-     4.10638971328734
-    ],
-    "velocity_error": [
-     0.0,
-     0.3433583590542703
-    ],
-    "pressure_error": [
-     0.0,
-     0.21778966490972868
-    ]
-   }
-  },
-  "g1_u2_yaw_m20": {
-   "u_ref": 2.0,
-   "frames": 30,
-   "aspect": 0.8531,
-   "clim": {
-    "velocity": [
-     0.0750009121151058,
-     0.7462228608218681
-    ],
-    "pressure": [
-     -4.702104926109314,
-     4.1273573875427205
-    ],
-    "velocity_error": [
-     0.0,
-     0.37338206353901326
-    ],
-    "pressure_error": [
-     0.0,
-     0.23521858035062768
-    ]
-   }
-  },
-  "h1_2_u2_yaw_p0": {
-   "u_ref": 2.0,
-   "frames": 30,
-   "aspect": 0.8562,
-   "clim": {
-    "velocity": [
-     0.06996217341839095,
-     0.8809692672349011
-    ],
-    "pressure": [
-     -3.9203275442123413,
-     5.0148850679397565
-    ],
-    "velocity_error": [
-     0.0,
-     0.3879465085474427
-    ],
-    "pressure_error": [
-     0.0,
-     0.2450475558469428
-    ]
-   }
-  },
-  "h1_2_u2_yaw_m20": {
-   "u_ref": 2.0,
-   "frames": 30,
-   "aspect": 0.8766,
-   "clim": {
-    "velocity": [
-     0.06738836500655991,
-     0.8749702791986385
-    ],
-    "pressure": [
-     -3.8614856719970705,
-     4.86744661331177
-    ],
-    "velocity_error": [
-     0.0,
-     0.41649686031566246
-    ],
-    "pressure_error": [
-     0.0,
-     0.28187593682696
-    ]
-   }
+   "aspect": 1.0,
+   "fieldBar": "compare/h1_2/colorbars/gt_colorbar_h.png",
+   "errorBar": "compare/h1_2/colorbars/velocity_error_colorbar_h.png"
   }
  }
 }

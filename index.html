@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/css/style.css?v=7" />
+  <link rel="stylesheet" href="static/css/style.css?v=11" />
 </head>
 <body>
   <nav class="topnav" id="topnav">
@@ -65,7 +65,7 @@
         <video class="demo-video" controls preload="metadata" playsinline poster="static/video/demo.jpg">
           <source src="static/video/demo.mp4" type="video/mp4" />
         </video>
-        <p class="caption video-caption">Overview of RoboCFD-4D and DynaSolver (2:55, with narration).</p>
+        <p class="caption video-caption">Overview of RoboCFD-4D and DynaSolver (1:16).</p>
       </div>
     </section>
 
@@ -203,14 +203,12 @@
         <div class="subblock" id="qualitative">
           <h3>Qualitative comparison</h3>
           <p>
-            Thirty autoregressive rollout frames on three robots (A1, G1, H1-2) at u = 2 m/s and two
-            inflow angles. The first panel is the ground-truth field; the rest are point-wise error
-            maps of DynaSolver and five baselines on one shared scale. <span class="hint">Click the board to pause or resume.</span>
+            Thirty autoregressive rollout frames on three robots (A1, G1, and H1-2). The first panel
+            is the ground-truth velocity field; the rest are point-wise velocity error of DynaSolver
+            and five baselines. <span class="hint">Click the board to pause or resume.</span>
           </p>
           <div class="cmp-controls">
-            <div class="fgroup"><span class="flabel">Case</span><div class="fgroup" id="cmpCaseChips"></div></div>
-            <div class="sep"></div>
-            <div class="fgroup"><span class="flabel">Quantity</span><div class="fgroup" id="cmpModeChips"></div></div>
+            <div class="fgroup"><span class="flabel">Robot</span><div class="fgroup" id="cmpCaseChips"></div></div>
             <span class="cmp-frame" id="cmpFrame"></span>
           </div>
           <div class="cmp-board" id="cmpBoard"></div>
@@ -224,7 +222,7 @@
         <h2>RoboCFD-4D Dataset</h2>
         <p class="lead">
           RoboCFD-4D is a temporally resolved CFD benchmark of articulated robots in motion.
-          Below are twenty robots, each under two wind conditions. Clips are muted 50-frame loops; <span class="hint">click a clip to pause it</span>.
+          Below are twenty-two robots at u = 6 m/s and yaw 0°. Clips are muted loops; <span class="hint">click a clip to pause it</span>.
         </p>
         <div class="clip-grid" id="grid"></div>
       </div>
@@ -325,6 +323,6 @@
   <footer class="footer">
     DynaSolver project page
   </footer>
-  <script src="static/js/demo.js?v=7"></script>
+  <script src="static/js/demo.js?v=9"></script>
 </body>
 </html>

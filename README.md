@@ -2,10 +2,10 @@
 
 Academic project homepage for **DynaSolver**: a full-screen video hero, then Video, Abstract, Method, Dataset, Experiments and Citation sections in `index.html`.
 
-The qualitative comparison frames in `static/demo/compare/` are generated from the paper renders:
+The qualitative comparison frames in `static/demo/compare/` are generated from the collected renders:
 
 ```bash
-python3 tools/build_compare.py /path/to/paper_vis_g1_h12_a1_u2_yaw0_m20_fixedcam static/demo/compare
+python tools/build_compare.py path/to/image_collect static/demo/compare
 ```
 
 ## Local preview
