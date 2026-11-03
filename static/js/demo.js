@@ -190,7 +190,7 @@ const ABL_ROWS = [
   { name: "Parallel TF", err: 18.18, time: 1.792 },
   { name: "Parallel TF + Noise", err: 17.14, time: 3.342 },
   { name: "Pure Replay", err: 16.72, time: 2.824 },
-  { name: "Replay-Augmented Parallel", err: 16.14, time: 3.384, ours: true }
+  { name: "Replay-Augmented Parallel", err: 16.14, time: 2.313, ours: true }
 ];
 const ABL_ERR_FLOOR = 15;
 (function ablBuild(){
