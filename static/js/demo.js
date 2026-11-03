@@ -219,6 +219,9 @@ const ROLL_HOLD_MS = 2600;
 
 function rollPrepare(svg){
   const parsePts = d => (d.match(/-?\d+(\.\d+)?/g) || []).map(Number);
+  // The cursor lives in root user space; getCTM() would include the viewBox scale.
+  const rootInv = svg.getScreenCTM().inverse();
+  const toRoot = el => rootInv.multiply(el.getScreenCTM());
   const curves = [];
   const colors = new Set();
   svg.querySelectorAll("path").forEach(function(el){
@@ -227,7 +230,7 @@ function rollPrepare(svg){
     if (st.indexOf("fill:none") < 0 || (d.match(/ L /g) || []).length < 4 || / Z/.test(d)) return;
     const n = parsePts(d), pts = [];
     for (let i = 0; i + 1 < n.length; i += 2) pts.push([n[i], n[i + 1]]);
-    const m = el.getCTM();
+    const m = toRoot(el);
     curves.push({ el: el, pts: pts, m: m, gx: pts.map(p => m.a * p[0] + m.c * p[1] + m.e), gy: pts.map(p => m.b * p[0] + m.d * p[1] + m.f) });
     const c = /stroke:([^;]+)/.exec(st);
     if (c) colors.add(c[1].trim());
@@ -246,7 +249,7 @@ function rollPrepare(svg){
     let colored = false;
     colors.forEach(c => { if (st.indexOf(c) >= 0) colored = true; });
     if (!colored) return;
-    const bb = el.getBBox(), m = el.getCTM();
+    const bb = el.getBBox(), m = toRoot(el);
     const cx = m.a * (bb.x + bb.width / 2) + m.c * (bb.y + bb.height / 2) + m.e;
     const cy = m.b * (bb.x + bb.width / 2) + m.d * (bb.y + bb.height / 2) + m.f;
     if (cx < x0 - 8 || cx > x1 + 8 || cy < y0 || cy > y1) return;
